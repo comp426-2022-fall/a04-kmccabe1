@@ -20,45 +20,44 @@ app.use(express.urlencoded({ extended: true }))
 
 // Create endpoint at /app/ that returns 200 OK
 app.get('/app/', (req, res, next) => {
-  res.type('html')
+  	res.type('html')
 	res.status(200).send('200 OK')
-  console.log(res)
 })
 
 // Create endpoint for /app/roll/ that returns JSON for a default roll
 app.get('/app/roll/', (req, res, next) => {
 	// Check if args were provided as JSON or URLencoded
 	let arg_sides = req.body.sides
-  if (!arg_sides) { arg_sides = sides }
+  	if (!arg_sides) { arg_sides = sides }
 	let arg_dice = req.body.dice
-  if (!arg_dice) { arg_dice = dice }
+  	if (!arg_dice) { arg_dice = dice }
 	let arg_rolls = req.body.rolls
-  if (!arg_rolls) { arg_rolls = rolls }
+  	if (!arg_rolls) { arg_rolls = rolls }
 	res.status(200).type('json').json(roll(arg_sides, arg_dice, arg_rolls))
 })
 
 // Dice roll endpoint for /app/roll/:sides/
 app.get('/app/roll/:sides/', (req, res, next) => {
 	// Roll dice with sides param
-	res.status(200).type('json').json(roll(req.params.sides, dice, rolls))	
+	res.status(200).type('json').json(roll(parseInt(req.params.sides), dice, rolls))	
 })
 
 // Dice roll endpoint for /app/roll/:sides/:dice/
 app.get('/app/roll/:sides/:dice/', (req, res, next) => {
-  // Roll dice with sides and dice params
-  res.status(200).type('json').json(roll(req.params.sides, req.params.dice, rolls))
+	// Roll dice with sides and dice params
+	res.status(200).type('json').json(roll(parseInt(req.params.sides), parseInt(req.params.dice), rolls))
 })
 
 // Dice roll endpoint for /app/roll/:sides/:dice/:rolls/
 app.get('/app/roll/:sides/:dice/:rolls/', (req, res, next) => {
-  // Roll dice with sides, dice, and rolls params
-  res.status(200).type('json').json(roll(req.params.sides, req.params.dice, req.params.rolls))
+	// Roll dice with sides, dice, and rolls params
+	res.status(200).type('json').json(roll(parseInt(req.params.sides), parseInt(req.params.dice), parseInt(req.params.rolls)))
 })
 
 // Default endpoint for undefined endpoints
 app.get('*', (req, res, next) => {
-  res.type('html')
-  res.status(404).send('404 NOT FOUND')
+	res.type('html')
+	res.status(404).send('404 NOT FOUND')
 })
 
 app.listen(port)
