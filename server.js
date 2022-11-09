@@ -8,7 +8,8 @@ const app = express()
 const args = minimist(process.argv.slice(2))
 
 // Default to port 5000 if no arg given
-const port = args.port || 5000
+let port = 5000
+if (args.port) { port = args.port }
 // Default values for dice roll
 const sides = 6
 const dice = 2
@@ -27,9 +28,12 @@ app.get('/app/', (req, res, next) => {
 // Create endpoint for /app/roll/ that returns JSON for a default roll
 app.get('/app/roll/', (req, res, next) => {
 	// Check if args were provided as JSON or URLencoded
-	const arg_sides = req.body.sides || sides
-	const arg_dice = req.body.dice || dice
-	const arg_rolls = req.body.rolls || rolls
+	let arg_sides = req.body.sides
+  if (!arg_sides) { arg_sides = sides }
+	let arg_dice = req.body.dice
+  if (!arg_dice) { arg_dice = dice }
+	let arg_rolls = req.body.rolls
+  if (!arg_rolls) { arg_rolls = rolls }
 	res.status(200).type('json').json(roll(arg_sides, arg_dice, arg_rolls))
 })
 
