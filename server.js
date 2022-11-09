@@ -17,26 +17,42 @@ const rolls = 1
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
+// Default endpoint for undefined endpoints
+app.get('*', (req, res, next) => {
+  res.status(404).send('NOT FOUND')
+})
+
 // Create endpoint at /app/ that returns 200 OK
 app.get('/app/', (req, res, next) => {
-	res.status(200)
+	res.status(200).send('OK')
 })
 
 // Create endpoint for /app/roll/ that returns JSON for a default roll
 app.get('/app/roll/', (req, res, next) => {
+	// Check if args were provided as JSON or URLencoded
 	const arg_sides = req.body.sides || sides
 	const arg_dice = req.body.dice || dice
 	const arg_rolls = req.body.rolls || rolls
-	res.status(200).json(roll(arg_sides, arg_dice, arg_rolls))
+	res.status(200).type('json').json(roll(arg_sides, arg_dice, arg_rolls))
 })
 
 // Dice roll endpoint for /app/roll/:sides/
 app.get('/app/roll/:sides/', (req, res, next) => {
-	res.status(200).json(roll(req.params.sides, dice, rolls))	
+	// Roll dice with sides param
+	res.status(200).type('json').json(roll(req.params.sides, dice, rolls))	
+})
+
+// Dice roll endpoint for /app/roll/:sides/:dice/
+app.get('/app/roll/:sides/:dice/', (req, res, next) => {
+  // Roll dice with sides and dice params
+  res.status(200).type('json').json(roll(req.params.sides, req.params.dice, rolls))
+})
+
+// Dice roll endpoint for /app/roll/:sides/:dice/
+app.get('/app/roll/:sides/:dice/', (req, res, next) => {
+  // Roll dice with sides, dice, and rolls params
+  res.status(200).type('json').json(roll(req.params.sides, req.params.dice, req.params.rolls))
 })
 
 
 
-app.listen(port, () => {
-		console.log("Server listening on port " + port + ".")
-})
