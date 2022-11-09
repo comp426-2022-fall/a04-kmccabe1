@@ -9,6 +9,7 @@ const args = minimist(process.argv.slice(2))
 
 // Default to port 5000 if no arg given
 const port = args.port || 5000
+app.listen(port)
 // Default values for dice roll
 const sides = 6
 const dice = 2
