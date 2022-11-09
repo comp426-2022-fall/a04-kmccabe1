@@ -21,18 +21,24 @@ app.use(express.urlencoded({ extended: true }))
 // Create endpoint at /app/ that returns 200 OK
 app.get('/app/', (req, res, next) => {
   res.type('html')
-	res.status(200).send('200 OK')
+  res.status(200).send('200 OK')
 })
 
 // Create endpoint for /app/roll/ that returns JSON for a default roll
 app.get('/app/roll/', (req, res, next) => {
 	// Check if args were provided as JSON or URLencoded
-	let arg_sides = parseInt(req.body.sides)
-  if (!arg_sides) { arg_sides = sides }
-	let arg_dice = parseInt(req.body.dice)
-  if (!arg_dice) { arg_dice = dice }
+	let arg_sides = sides
+  if (!arg_sides) {
+	  arg_sides = parseInt(req.body.sides)
+  }
+	let arg_dice = dice
+  if (!arg_dice) { 
+	  arg_dice = parseInt(req.body.dice)
+  }
 	let arg_rolls = parseInt(req.body.rolls)
-  if (!arg_rolls) { arg_rolls = rolls }
+  if (!arg_rolls) { 
+	  arg_rolls = rolls
+  }
 	res.status(200).type('json').json(roll(arg_sides, arg_dice, arg_rolls))
 })
 
