@@ -28,16 +28,16 @@ app.get('/app/', (req, res, next) => {
 app.get('/app/roll/', (req, res, next) => {
 	// Check if args were provided as JSON or URLencoded
 	let arg_sides = sides
-  if (!arg_sides) {
+  if (req.body.sides) {
 	  arg_sides = parseInt(req.body.sides)
   }
 	let arg_dice = dice
-  if (!arg_dice) { 
+  if (req.body.dice) { 
 	  arg_dice = parseInt(req.body.dice)
   }
-	let arg_rolls = parseInt(req.body.rolls)
-  if (!arg_rolls) { 
-	  arg_rolls = rolls
+	let arg_rolls = rolls
+  if (req.body.rolls) { 
+	  arg_rolls = parseInt(req.body.rolls)
   }
 	res.status(200).type('json').json(roll(arg_sides, arg_dice, arg_rolls))
 })
