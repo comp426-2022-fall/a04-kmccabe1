@@ -2,7 +2,7 @@
 // Entrypoint to API server
 // Load dependencies
 import { roll } from './lib/roll.js'
-const express = require('expres')
+const express = require('express')
 const app = express()
 const args = require('minimist')(process.argv.slice(2))
 
