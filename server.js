@@ -2,9 +2,10 @@
 // Entrypoint to API server
 // Load dependencies
 import { roll } from './lib/roll.js'
-const express = require('express')
+import express from 'express'
+import minimist from 'minimist'
 const app = express()
-const args = require('minimist')(process.argv.slice(2))
+const args = minimist(process.argv.slice(2))
 
 // Default to port 5000 if no arg given
 const port = args.port || 5000
@@ -14,7 +15,7 @@ const dice = 2
 const rolls = 1
 
 app.use(express.json())
-app.use(expres.urlencoded({ extended: true }))
+app.use(express.urlencoded({ extended: true }))
 
 // Create endpoint at /app/ that returns 200 OK
 app.get('/app/', (req, res, next) => {
