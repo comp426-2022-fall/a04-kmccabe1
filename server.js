@@ -9,7 +9,6 @@ const args = minimist(process.argv.slice(2))
 
 // Default to port 5000 if no arg given
 const port = args.port || 5000
-app.listen(port)
 // Default values for dice roll
 const sides = 6
 const dice = 2
@@ -17,11 +16,6 @@ const rolls = 1
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-
-// Default endpoint for undefined endpoints
-app.get('*', (req, res, next) => {
-  res.status(404).send('NOT FOUND')
-})
 
 // Create endpoint at /app/ that returns 200 OK
 app.get('/app/', (req, res, next) => {
@@ -55,5 +49,10 @@ app.get('/app/roll/:sides/:dice/', (req, res, next) => {
   res.status(200).type('json').json(roll(req.params.sides, req.params.dice, req.params.rolls))
 })
 
+// Default endpoint for undefined endpoints
+app.get('*', (req, res, next) => {
+  res.status(404).send('NOT FOUND')
+})
 
+app.listen(port)
 
