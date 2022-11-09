@@ -19,7 +19,9 @@ app.use(express.urlencoded({ extended: true }))
 
 // Create endpoint at /app/ that returns 200 OK
 app.get('/app/', (req, res, next) => {
-	res.status(200).send('OK')
+  res.type('html')
+	res.status(200).send('200 OK')
+  console.log(res)
 })
 
 // Create endpoint for /app/roll/ that returns JSON for a default roll
@@ -43,15 +45,16 @@ app.get('/app/roll/:sides/:dice/', (req, res, next) => {
   res.status(200).type('json').json(roll(req.params.sides, req.params.dice, rolls))
 })
 
-// Dice roll endpoint for /app/roll/:sides/:dice/
-app.get('/app/roll/:sides/:dice/', (req, res, next) => {
+// Dice roll endpoint for /app/roll/:sides/:dice/:rolls/
+app.get('/app/roll/:sides/:dice/:rolls/', (req, res, next) => {
   // Roll dice with sides, dice, and rolls params
   res.status(200).type('json').json(roll(req.params.sides, req.params.dice, req.params.rolls))
 })
 
 // Default endpoint for undefined endpoints
 app.get('*', (req, res, next) => {
-  res.status(404).send('NOT FOUND')
+  res.type('html')
+  res.status(404).send('404 NOT FOUND')
 })
 
 app.listen(port)
