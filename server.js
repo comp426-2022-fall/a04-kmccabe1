@@ -23,13 +23,19 @@ app.get('/app/', (req, res, next) => {
   res.status(200).send('200 OK')
 })
 
-// Create endpoint for /app/roll/ that returns JSON for a default roll
+// Endpoint for default dice roll
 app.get('/app/roll/', (req, res, next) => {
+  res.status(200).json(roll(sides, dice, rolls)
+})
+
+// Create endpoint for /app/roll/ that returns JSON for a default roll
+app.post('/app/roll/', (req, res, next) => {
 	// Check if args were provided as JSON or URLencoded
 	const arg_sides = req.body.sides ? req.body.sides : sides
 	const arg_dice = req.body.dice ? req.body.dice : dice
 	const arg_rolls = req.body.rolls ? req.body.rolls : rolls
-	res.send(JSON.stringify(roll(arg_sides, arg_dice, arg_rolls)))
+  roll(arg_sides, arg_dice, arg_rolls)
+	res.status(200).json(roll(arg_sides, arg_dice, arg_rolls))
 })
 
 // Dice roll endpoint for /app/roll/:sides/
