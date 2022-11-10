@@ -40,19 +40,19 @@ app.post('/app/roll/', (req, res, next) => {
 // Dice roll endpoint for /app/roll/:sides/
 app.get('/app/roll/:sides/', (req, res, next) => {
 	// Roll dice with sides param
-	res.status(200).json(roll(parseInt(req.params.sides), dice, rolls))	
+	res.status(200).json(roll(req.params.sides, dice, rolls))	
 })
 
 // Dice roll endpoint for /app/roll/:sides/:dice/
 app.get('/app/roll/:sides/:dice/', (req, res, next) => {
 	// Roll dice with sides and dice params
-	res.status(200).json(roll(parseInt(req.params.sides), parseInt(req.params.dice), rolls))
+	res.status(200).json(roll(req.params.sides, req.params.dice, rolls))
 })
 
 // Dice roll endpoint for /app/roll/:sides/:dice/:rolls/
 app.get('/app/roll/:sides/:dice/:rolls/', (req, res, next) => {
 	// Roll dice with sides, dice, and rolls params
-	res.status(200).json(roll(parseInt(req.params.sides), parseInt(req.params.dice), parseInt(req.params.rolls)))
+	res.status(200).json(roll(req.params.sides, req.params.dice, req.params.rolls))
 })
 
 // Default endpoint for undefined endpoints
