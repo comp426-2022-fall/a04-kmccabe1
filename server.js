@@ -29,7 +29,7 @@ app.get('/app/roll/', (req, res, next) => {
 	const arg_sides = req.body.sides ? req.body.sides : sides
 	const arg_dice = req.body.dice ? req.body.dice : dice
 	const arg_rolls = req.body.rolls ? req.body.rolls : rolls
-	res.status(200).json(roll(arg_sides, arg_dice, arg_rolls))
+	res.status(200).send(JSON.stringify(roll(arg_sides, arg_dice, arg_rolls))))
 })
 
 // Dice roll endpoint for /app/roll/:sides/
